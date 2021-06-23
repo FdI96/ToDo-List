@@ -1,5 +1,8 @@
 import { projects, addButtonComponent } from "./addButton";
 
+let projectsArray = JSON.parse(localStorage.getItem("projectsArray"));
+projectsArray = !projectsArray ? [] : projectsArray;
+
 const projectListComponent = () => {
   const projectList = document.createElement("div");
   projectList.setAttribute("class", "col-4");
@@ -32,10 +35,9 @@ const projectListComponent = () => {
     button.innerHTML = form.children[0].value;
     li.appendChild(button);
     uList.appendChild(li);
-    console.log(projects);
+    localStorage.setItem("projectsArray", JSON.stringify(projects));
   });
 
-  console.log(projects);
   projectList.appendChild(divProjectsButton);
 
   projectList.appendChild(uList);

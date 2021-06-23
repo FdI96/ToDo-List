@@ -1,4 +1,6 @@
-const projects = ["Default"];
+const myStorage = window.localStorage;
+let projects = JSON.parse(myStorage.getItem("projectsArray"));
+projects = !projects ? ["Default"] : projects;
 
 const addButtonComponent = () => {
   const form = document.createElement("form");
