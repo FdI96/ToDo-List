@@ -19,11 +19,17 @@ const projectListComponent = () => {
 
   const uList = document.createElement("ul");
 
-  let li = document.createElement("li");
-  let button = document.createElement("button");
-  button.innerHTML = projects[0];
-  li.appendChild(button);
-  uList.appendChild(li);
+  for (let index = 0; index < projects.length; index++) {
+    let li = document.createElement("li");
+    let button = document.createElement("button");
+    button.innerHTML = projects[index];
+    li.appendChild(button);
+    uList.appendChild(li);
+  }
+
+  projectList.appendChild(divProjectsButton);
+
+  projectList.appendChild(uList);
 
   const submitButton = form.children[1].children[0];
   submitButton.addEventListener("click", (e) => {
@@ -37,10 +43,6 @@ const projectListComponent = () => {
     uList.appendChild(li);
     localStorage.setItem("projectsArray", JSON.stringify(projects));
   });
-
-  projectList.appendChild(divProjectsButton);
-
-  projectList.appendChild(uList);
 
   return projectList;
 };
