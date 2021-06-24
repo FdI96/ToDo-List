@@ -1,27 +1,11 @@
-const toDoCollection = () => {
-  const onSubmitForm = (that) => {
-    that.toDoListBlock.value;
-    return false;
-  };
+import { ToDo } from "./toDo";
 
-  const toDoList = document.createElement("div");
-  toDoList.setAttribute("class", "col-8");
+let allToDos = JSON.parse(localStorage.getItem("allToDosArray"));
+console.log(allToDos);
+allToDos = !allToDos ? [] : allToDos;
 
-  const title = document.createElement("h2");
-  title.setAttribute("class", "text-center");
-  title.innerHTML = "List of ToDo";
-
-  toDoList.appendChild(title);
-
-  const toDoListBlock = document.createElement("div");
-  toDoListBlock.setAttribute("class", "toDoListBlock");
+const form = () => {
   const form = document.createElement("form");
-  form.setAttribute("onsubmit", "onSubmitFuction(this)");
-  toDoListBlock.appendChild(form);
-  toDoList.appendChild(toDoListBlock);
-
-  // form fields
-
   const inputTitleNLabel = document.createElement("div");
   form.appendChild(inputTitleNLabel);
   let label = document.createElement("label");
@@ -70,17 +54,17 @@ const toDoCollection = () => {
 
   for (let index = 0; index < 3; index++) {
     input = document.createElement("input");
-    let priority = null;
+    let priority;
     switch (index) {
       case 0:
-        priority = "Low";
+        priority = "low";
         break;
 
       case 1:
-        priority = "Medium";
+        priority = "medium";
         break;
       case 2:
-        priority = "Urgent";
+        priority = "urgent";
         break;
 
       default:
@@ -88,12 +72,12 @@ const toDoCollection = () => {
     }
 
     label = document.createElement("label");
-    label.setAttribute("for", "priority");
+    label.setAttribute("for", priority);
     label.innerHTML = priority;
     inputPriorityNLabel.appendChild(label);
     input.setAttribute("type", "radio");
-    input.setAttribute("name", "priority");
-    input.setAttribute("id", "priority");
+    input.setAttribute("name", priority);
+    input.setAttribute("id", priority);
     inputPriorityNLabel.appendChild(input);
   }
 
@@ -101,8 +85,51 @@ const toDoCollection = () => {
   form.appendChild(sumbitButton);
   sumbitButton.setAttribute("type", "submit");
   sumbitButton.setAttribute("id", "submitButton");
+  return form;
+};
 
+const toDoCollection = () => {
+  const toDoList = document.createElement("div");
+  toDoList.setAttribute("class", "col-8");
+
+  const title = document.createElement("h2");
+  title.setAttribute("class", "text-center");
+  title.innerHTML = "List of ToDo";
+
+  toDoList.appendChild(title);
+
+  const toDoListBlock = document.createElement("div");
+  toDoListBlock.setAttribute("class", "toDoListBlock");
+
+  toDoListBlock.appendChild(form());
+  toDoList.appendChild(toDoListBlock);
+
+  // const onSubmitForm = document.getElementById("submitButton");
+  // onSubmitForm.addEventListener("click", (e) => {
+  //   e.preventDefault();
+  //   console.log("click");
+  //   let toDo = new ToDo(getTitle(), getDescription(), getDate(), getPriority());
+  //   allToDos.push(toDo);
+  //   localStorage.setItem("allToDosArray", allToDos);
+  // });
+
+  const toDoListShow = document.createElement("div");
+  toDoListShow.setAttribute("id", "toDoListShow");
+  for (let index = 0; index < allToDos.length; index++) {
+    let card = new ToDo(
+      allToDos[index].title,
+      allToDos[index].description,
+      allToDos[index].date,
+      allToDos[index].priority
+    );
+    let renderCard = card.print();
+    toDoListShow.appendChild(renderCard);
+    toDoList.appendChild(toDoListShow);
+  }
+  // form fields
+
+  // end of form fields
   return toDoList;
 };
 
-export default toDoCollection;
+export { toDoCollection, allToDos };
