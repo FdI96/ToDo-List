@@ -2,9 +2,33 @@ import { projectListComponent } from "./projects";
 import { toDoCollection, allToDos } from "./toDoCollection";
 import { ToDo } from "./toDo";
 
+let currentProject = localStorage.getItem("currentProject");
+currentProject ??= localStorage.setItem("currentProject", "Default");
+let defProject = JSON.parse(localStorage.getItem("Default"));
+if (defProject == null) {
+  localStorage.setItem("Default", "[]");
+}
+
+let currentArray = JSON.parse(localStorage.getItem("Default"));
+currentArray ??= [];
+localStorage.setItem("currentArray", JSON.stringify(currentArray));
+
 const content = document.getElementById("content");
 
-const projectList = projectListComponent();
+const ptList = document.createElement("div");
+console.log(content);
+ptList.setAttribute("class", "col-4");
+ptList.setAttribute("id", "projectList");
+content.appendChild(ptList);
+console.log(ptList);
+
+const toList = document.createElement("div");
+toList.setAttribute("class", "col-8");
+toList.setAttribute("id", "toDoList");
+content.appendChild(toList);
+
+let projectList = projectListComponent();
+
 content.appendChild(projectList);
 
 const toDoList = toDoCollection();
@@ -49,7 +73,14 @@ onSubmitForm.addEventListener("click", (e) => {
   let prior = getPriority();
 
   let toDo = new ToDo(title, desc, date, prior);
-  toDoList.appendChild(toDo.print());
+  toDoListShow.appendChild(toDo.print());
   allToDos.push(toDo);
+  currentArray = JSON.parse(localStorage.getItem("currentArray"));
+  localStorage.setItem("Default", JSON.stringify(allToDos));
+  currentArray.push(toDo);
+  currentProject = localStorage.getItem("currentProject");
+  localStorage.setItem("currentArray", JSON.stringify(currentArray));
+  localStorage.setItem(`${currentProject}`, JSON.stringify(currentArray));
   localStorage.setItem("allToDosArray", JSON.stringify(allToDos));
+  toDoList.appendChild(toDoListShow);
 });

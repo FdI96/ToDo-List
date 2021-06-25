@@ -1,8 +1,7 @@
 import { ToDo } from "./toDo";
 
 let allToDos = JSON.parse(localStorage.getItem("allToDosArray"));
-console.log(allToDos);
-allToDos = !allToDos ? [] : allToDos;
+allToDos ??= [];
 
 const form = () => {
   const form = document.createElement("form");
@@ -89,8 +88,10 @@ const form = () => {
 };
 
 const toDoCollection = () => {
-  const toDoList = document.createElement("div");
-  toDoList.setAttribute("class", "col-8");
+  const toDoList = document.getElementById("toDoList");
+  // const toDoList = document.createElement("div");
+  // toDoList.setAttribute("class", "col-8");
+  // toDoList.setAttribute("id", "toDoList");
 
   const title = document.createElement("h2");
   title.setAttribute("class", "text-center");
@@ -106,16 +107,24 @@ const toDoCollection = () => {
 
   const toDoListShow = document.createElement("div");
   toDoListShow.setAttribute("id", "toDoListShow");
-  for (let index = 0; index < allToDos.length; index++) {
-    let card = new ToDo(
-      allToDos[index].title,
-      allToDos[index].description,
-      allToDos[index].date,
-      allToDos[index].priority
+  toDoList.appendChild(toDoListShow);
+  let currentProject = localStorage.getItem("currentProject");
+  const arrayAux =
+    currentProject == "Default"
+      ? allToDos
+      : JSON.parse(localStorage.getItem(currentProject));
+  console.log("array Auxiliar", arrayAux);
+  for (let index = 0; index < arrayAux.length; index++) {
+    const card = new ToDo(
+      arrayAux[index].title,
+      arrayAux[index].description,
+      arrayAux[index].date,
+      arrayAux[index].priority
     );
-    let renderCard = card.print();
-    toDoListShow.appendChild(renderCard);
-    toDoList.appendChild(toDoListShow);
+    if (card.title) {
+      let renderCard = card.print();
+      toDoListShow.appendChild(renderCard);
+    }
   }
 
   return toDoList;

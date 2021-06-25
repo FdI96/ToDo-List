@@ -20,7 +20,6 @@ class ToDo {
 
     let title = document.createElement("div");
     title.setAttribute("class", "card-header text-white");
-    console.log(title);
     title.innerHTML = this.title;
     card.appendChild(title);
 
