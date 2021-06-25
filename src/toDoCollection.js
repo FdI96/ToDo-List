@@ -104,15 +104,6 @@ const toDoCollection = () => {
   toDoListBlock.appendChild(form());
   toDoList.appendChild(toDoListBlock);
 
-  // const onSubmitForm = document.getElementById("submitButton");
-  // onSubmitForm.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   console.log("click");
-  //   let toDo = new ToDo(getTitle(), getDescription(), getDate(), getPriority());
-  //   allToDos.push(toDo);
-  //   localStorage.setItem("allToDosArray", allToDos);
-  // });
-
   const toDoListShow = document.createElement("div");
   toDoListShow.setAttribute("id", "toDoListShow");
   for (let index = 0; index < allToDos.length; index++) {
@@ -126,9 +117,7 @@ const toDoCollection = () => {
     toDoListShow.appendChild(renderCard);
     toDoList.appendChild(toDoListShow);
   }
-  // form fields
 
-  // end of form fields
   return toDoList;
 };
 

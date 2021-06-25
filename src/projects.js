@@ -1,7 +1,14 @@
 import { projects, addButtonComponent } from "./addButton";
 
+localStorage.setItem("Default", "[]");
+
+let currentProject = localStorage.getItem("currentProject");
+currentProject ??= localStorage.setItem("currentProject", "Default");
+
 let projectsArray = JSON.parse(localStorage.getItem("projectsArray"));
-projectsArray = !projectsArray ? [] : projectsArray;
+projectsArray ??= [];
+let currentArray = JSON.parse(localStorage.getItem("Default"));
+currentArray ??= [];
 
 const projectListComponent = () => {
   const projectList = document.createElement("div");
@@ -23,8 +30,15 @@ const projectListComponent = () => {
     let li = document.createElement("li");
     let button = document.createElement("button");
     button.innerHTML = projects[index];
+    button.addEventListener("click", (e) => {
+      localStorage.setItem("currentProject", e.target.innerHTML);
+      currentArray = JSON.parse(localStorage.getItem(e.target.innerHTML));
+    });
     li.appendChild(button);
     uList.appendChild(li);
+
+    currentArray = JSON.parse(localStorage.getItem(currentProject));
+    console.log(currentArray);
   }
 
   projectList.appendChild(divProjectsButton);
@@ -39,6 +53,15 @@ const projectListComponent = () => {
     let li = document.createElement("li");
     let button = document.createElement("button");
     button.innerHTML = form.children[0].value;
+    button.addEventListener("click", (e) => {
+      localStorage.setItem("currentProject", e.target.innerHTML);
+      currentArray = JSON.parse(localStorage.getItem(e.target.innerHTML));
+    });
+
+    localStorage.setItem("currentProject", form.children[0].value);
+    localStorage.setItem(form.children[0].value, JSON.stringify([]));
+    currentArray = JSON.parse(localStorage.getItem(e.target.value));
+    console.log(currentArray);
     li.appendChild(button);
     uList.appendChild(li);
     localStorage.setItem("projectsArray", JSON.stringify(projects));
