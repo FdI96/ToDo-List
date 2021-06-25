@@ -42,6 +42,16 @@ class ToDo {
     bodyP.innerHTML = this.priority;
     body.appendChild(bodyP);
 
+    const keypad = document.createElement("div");
+    keypad.setAttribute("class", "row container");
+    card.appendChild(keypad);
+
+    const delButton = document.createElement("button");
+    delButton.setAttribute("id", "deleteButton");
+    delButton.setAttribute("class", "col-2");
+    delButton.innerHTML = "Delete";
+    keypad.appendChild(delButton);
+
     return card;
   }
 }
