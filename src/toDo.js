@@ -4,6 +4,29 @@ class ToDo {
     this.description = description;
     this.date = date;
     this.priority = priority;
+    let acc = localStorage.getItem("accToDo");
+    this.id = acc++;
+    localStorage.setItem("accToDo", acc);
+  }
+
+  removeElement() {
+    let arrayDefault = JSON.parse(localStorage.getItem("Default"));
+    let currentArray = JSON.parse(localStorage.getItem("currentArray"));
+    let findById = (element) => {
+      return element.id == this.id;
+    };
+    let indexDefault = arrayDefault.findIndex(findById);
+    let indexCA = currentArray.findIndex(findById);
+    arrayDefault.splice(indexDefault, 1);
+    localStorage.setItem("Default", JSON.stringify(arrayDefault));
+
+    currentArray.splice(indexCA, 1);
+    let currentProject = localStorage.getItem("currentProject");
+    localStorage.setItem(currentProject, JSON.stringify(currentArray));
+
+    let cardToRemove = document.getElementById(`${this.id}`);
+    let showToDoList = document.getElementById("toDoListShow");
+    showToDoList.removeChild(cardToRemove);
   }
 
   print() {
@@ -17,6 +40,7 @@ class ToDo {
       color = "danger";
     }
     card.setAttribute("class", `card text-white bg-${color}`);
+    card.setAttribute("id", `${this.id}`);
 
     let title = document.createElement("div");
     title.setAttribute("class", "card-header text-white");
@@ -51,6 +75,7 @@ class ToDo {
     delButton.setAttribute("class", "col-2");
     delButton.innerHTML = "Delete";
     keypad.appendChild(delButton);
+    delButton.addEventListener("click", () => this.removeElement());
 
     return card;
   }

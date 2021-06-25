@@ -89,9 +89,6 @@ const form = () => {
 
 const toDoCollection = () => {
   const toDoList = document.getElementById("toDoList");
-  // const toDoList = document.createElement("div");
-  // toDoList.setAttribute("class", "col-8");
-  // toDoList.setAttribute("id", "toDoList");
 
   const title = document.createElement("h2");
   title.setAttribute("class", "text-center");

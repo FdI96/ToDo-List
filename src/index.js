@@ -2,6 +2,8 @@ import { projectListComponent } from "./projects";
 import { toDoCollection, allToDos } from "./toDoCollection";
 import { ToDo } from "./toDo";
 
+let currentAcc = localStorage.getItem("accToDo");
+currentAcc ??= localStorage.setItem("accToDo", 0);
 let currentProject = localStorage.getItem("currentProject");
 currentProject ??= localStorage.setItem("currentProject", "Default");
 let defProject = JSON.parse(localStorage.getItem("Default"));

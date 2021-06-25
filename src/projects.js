@@ -81,6 +81,20 @@ const projectListComponent = () => {
       let item = localStorage.getItem("currentProject");
       currentArray = JSON.parse(localStorage.getItem(item));
       localStorage.setItem("currentArray", JSON.stringify(currentArray));
+      let toDoList = getElementById("toDoListShow");
+      toDoList.innerHTML = null;
+      for (let index = 0; index < currentArray.length; index++) {
+        const card = new ToDo(
+          currentArray[index].title,
+          currentArray[index].description,
+          currentArray[index].date,
+          currentArray[index].priority
+        );
+        if (card.id) {
+          let renderCard = card.print();
+          toDoListShow.appendChild(renderCard);
+        }
+      }
     });
     localStorage.setItem("currentProject", form.children[0].value);
     let key = form.children[0].value;
