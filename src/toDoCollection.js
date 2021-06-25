@@ -113,7 +113,7 @@ const toDoCollection = () => {
     currentProject == "Default"
       ? allToDos
       : JSON.parse(localStorage.getItem(currentProject));
-  console.log("array Auxiliar", arrayAux);
+
   for (let index = 0; index < arrayAux.length; index++) {
     const card = new ToDo(
       arrayAux[index].title,

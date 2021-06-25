@@ -16,11 +16,10 @@ localStorage.setItem("currentArray", JSON.stringify(currentArray));
 const content = document.getElementById("content");
 
 const ptList = document.createElement("div");
-console.log(content);
+
 ptList.setAttribute("class", "col-4");
 ptList.setAttribute("id", "projectList");
 content.appendChild(ptList);
-console.log(ptList);
 
 const toList = document.createElement("div");
 toList.setAttribute("class", "col-8");
