@@ -4,7 +4,7 @@
 
 It's a ToDoList app to store all the task you need and track them.
 
-![screenshot](./assets/screenshot/ToDoList.png)
+![screenshot](./dist/screenshot/ToDoList.png)
 
 - Add project button to add a new project or folder to store todos.
 - Add toDo form to add your task with a priority.
