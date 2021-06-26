@@ -1,59 +1,56 @@
-import { projects, addButtonComponent } from "./addButton";
-import { ToDo } from "./toDo";
+import { projects, addButtonComponent } from './addButton';
+import ToDo from './toDo';
 
-let currentProject = localStorage.getItem("currentProject");
-currentProject ??= localStorage.setItem("currentProject", "Default");
-let allToDos = JSON.parse(localStorage.getItem("allToDosArray"));
+let currentP = localStorage.getItem('currentProject');
+currentP ??= localStorage.setItem('currentProject', 'Default');
+let allToDos = JSON.parse(localStorage.getItem('allToDosArray'));
 allToDos ??= [];
 
-let projectsArray = JSON.parse(localStorage.getItem("projectsArray"));
-projectsArray ??= [];
-let currentArray = JSON.parse(localStorage.getItem("Default"));
-currentArray ??= [];
+let currentA = JSON.parse(localStorage.getItem('Default'));
+currentA ??= [];
 
 const projectListComponent = () => {
-  const projectList = document.getElementById("projectList");
+  const projectList = document.getElementById('projectList');
 
-  const divProjectsButton = document.createElement("div");
-  divProjectsButton.setAttribute("class", "row");
+  const divProjectsButton = document.createElement('div');
+  divProjectsButton.setAttribute('class', 'row');
 
-  const title = document.createElement("h1");
-  title.setAttribute("class", "col-8");
-  title.innerHTML = "Projects";
+  const title = document.createElement('h1');
+  title.setAttribute('class', 'col-8');
+  title.innerHTML = 'Projects';
   divProjectsButton.appendChild(title);
   const form = addButtonComponent();
   divProjectsButton.appendChild(form);
 
-  const uList = document.createElement("ul");
+  const uList = document.createElement('ul');
 
-  for (let index = 0; index < projects.length; index++) {
-    let li = document.createElement("li");
-    let button = document.createElement("button");
+  for (let index = 0; index < projects.length; index += 1) {
+    const li = document.createElement('li');
+    const button = document.createElement('button');
     button.innerHTML = projects[index];
-    button.addEventListener("click", (e) => {
-      localStorage.setItem("currentProject", e.target.innerHTML);
-      currentArray = JSON.parse(localStorage.getItem(e.target.innerHTML));
+    button.addEventListener('click', (e) => {
+      localStorage.setItem('currentProject', e.target.innerHTML);
+      currentA = JSON.parse(localStorage.getItem(e.target.innerHTML));
 
-      localStorage.setItem("currentArray", JSON.stringify(currentArray));
-      let list = document.getElementById("toDoListShow");
+      localStorage.setItem('currentArray', JSON.stringify(currentA));
+      const list = document.getElementById('toDoListShow');
 
       list.innerHTML = null;
-      let currentProject = localStorage.getItem("currentProject");
-      const arrayAux =
-        currentProject == "Default"
-          ? allToDos
-          : JSON.parse(localStorage.getItem("currentArray"));
+      const currentP = localStorage.getItem('currentProject');
+      const arrayAux = currentP == 'Default'
+        ? allToDos
+        : JSON.parse(localStorage.getItem('currentArray'));
 
-      for (let index = 0; index < arrayAux.length; index++) {
-        let card = new ToDo(
+      for (let index = 0; index < arrayAux.length; index += 1) {
+        const card = new ToDo(
           arrayAux[index].title,
           arrayAux[index].description,
           arrayAux[index].date,
-          arrayAux[index].priority
+          arrayAux[index].priority,
         );
 
         if (card.title) {
-          let renderCard = card.print();
+          const renderCard = card.print();
           list.appendChild(renderCard);
           toDoList.appendChild(list);
         }
@@ -63,7 +60,7 @@ const projectListComponent = () => {
     li.appendChild(button);
     uList.appendChild(li);
 
-    currentArray = JSON.parse(localStorage.getItem(currentProject));
+    currentA = JSON.parse(localStorage.getItem(currentP));
   }
 
   projectList.appendChild(divProjectsButton);
@@ -71,40 +68,40 @@ const projectListComponent = () => {
   projectList.appendChild(uList);
 
   const submitButton = form.children[1].children[0];
-  submitButton.addEventListener("click", (e) => {
+  submitButton.addEventListener('click', (e) => {
     projects.push(form.children[0].value);
-    let li = document.createElement("li");
-    let button = document.createElement("button");
+    const li = document.createElement('li');
+    const button = document.createElement('button');
     button.innerHTML = form.children[0].value;
-    button.addEventListener("click", (e) => {
-      localStorage.setItem("currentProject", e.target.innerHTML);
-      let item = localStorage.getItem("currentProject");
-      currentArray = JSON.parse(localStorage.getItem(item));
-      localStorage.setItem("currentArray", JSON.stringify(currentArray));
-      let toDoList = getElementById("toDoListShow");
+    button.addEventListener('click', (e) => {
+      localStorage.setItem('currentProject', e.target.innerHTML);
+      const item = localStorage.getItem('currentProject');
+      currentA = JSON.parse(localStorage.getItem(item));
+      localStorage.setItem('currentArray', JSON.stringify(currentA));
+      const toDoList = document.getElementById('toDoListShow');
       toDoList.innerHTML = null;
-      for (let index = 0; index < currentArray.length; index++) {
+      for (let index = 0; index < currentA.length; index += 1) {
         const card = new ToDo(
-          currentArray[index].title,
-          currentArray[index].description,
-          currentArray[index].date,
-          currentArray[index].priority
+          currentA[index].title,
+          currentA[index].description,
+          currentA[index].date,
+          currentA[index].priority,
         );
         if (card.id) {
-          let renderCard = card.print();
+          const renderCard = card.print();
           toDoListShow.appendChild(renderCard);
         }
       }
     });
-    localStorage.setItem("currentProject", form.children[0].value);
-    let key = form.children[0].value;
+    localStorage.setItem('currentProject', form.children[0].value);
+    const key = form.children[0].value;
     localStorage.setItem(`${key}`, JSON.stringify([]));
-    localStorage.setItem("currentArray", "[]");
-    let toDoListShow = document.getElementById("toDoListShow");
+    localStorage.setItem('currentArray', '[]');
+    let toDoListShow = document.getElementById('toDoListShow');
     toDoListShow.innerHTML = null;
     li.appendChild(button);
     uList.appendChild(li);
-    localStorage.setItem("projectsArray", JSON.stringify(projects));
+    localStorage.setItem('projectsArray', JSON.stringify(projects));
   });
 
   return projectList;
