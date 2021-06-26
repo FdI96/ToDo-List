@@ -1,9 +1,15 @@
-import { projectListComponent } from './projects';
-import { toDoCollection, allToDos } from './toDoCollection';
+import projectListComponent from './projects';
+import toDoCollection from './toDoCollection';
 import ToDo from './toDo';
 
-let currentAcc = localStorage.getItem('accToDo');
-currentAcc ??= localStorage.setItem('accToDo', 0);
+let allToDos = JSON.parse(localStorage.getItem('allToDosArray'));
+allToDos ??= [];
+localStorage.setItem('allToDosArray', JSON.stringify(allToDos));
+
+const currentAcc = localStorage.getItem('accToDo');
+if (currentAcc == null) {
+  localStorage.setItem('accToDo', 0);
+}
 let currentProject = localStorage.getItem('currentProject');
 currentProject ??= localStorage.setItem('currentProject', 'Default');
 const defProject = JSON.parse(localStorage.getItem('Default'));
@@ -74,6 +80,7 @@ onSubmitForm.addEventListener('click', (e) => {
   const prior = getPriority();
 
   const toDo = new ToDo(title, desc, date, prior);
+  const toDoListShow = document.getElementById('toDoListShow');
   toDoListShow.appendChild(toDo.print());
   allToDos.push(toDo);
   currentArray = JSON.parse(localStorage.getItem('currentArray'));

@@ -1,18 +1,24 @@
 class ToDo {
-  constructor(title, description, date, priority) {
+  constructor(title, description, date, priority, id) {
     this.title = title;
     this.description = description;
     this.date = date;
     this.priority = priority;
-    let acc = localStorage.getItem('accToDo');
-    this.id = acc += 1;
-    localStorage.setItem('accToDo', acc);
+    if (id) {
+      this.id = id;
+    } else {
+      let acc = localStorage.getItem('accToDo');
+      acc = Number(acc);
+      acc += 1;
+      this.id = acc;
+      localStorage.setItem('accToDo', acc);
+    }
   }
 
   removeElement() {
     const arrayDefault = JSON.parse(localStorage.getItem('Default'));
     const currentArray = JSON.parse(localStorage.getItem('currentArray'));
-    const findById = (element) => element.id == this.id;
+    const findById = (element) => element.id === this.id;
     const indexDefault = arrayDefault.findIndex(findById);
     const indexCA = currentArray.findIndex(findById);
     arrayDefault.splice(indexDefault, 1);
@@ -30,9 +36,9 @@ class ToDo {
   print() {
     const card = document.createElement('div');
     let color = null;
-    if (this.priority == 'low') {
+    if (this.priority === 'low') {
       color = 'primary';
-    } else if (this.priority == 'medium') {
+    } else if (this.priority === 'medium') {
       color = 'warning';
     } else {
       color = 'danger';

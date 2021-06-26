@@ -1,7 +1,3 @@
-const myStorage = window.localStorage;
-let projects = JSON.parse(myStorage.getItem('projectsArray'));
-projects = !projects ? ['Default'] : projects;
-
 const addButtonComponent = () => {
   const form = document.createElement('form');
   form.setAttribute('id', 'idForm');
@@ -23,4 +19,4 @@ const addButtonComponent = () => {
   return form;
 };
 
-export { projects, addButtonComponent };
+export default addButtonComponent;

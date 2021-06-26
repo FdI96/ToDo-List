@@ -1,9 +1,5 @@
 import ToDo from './toDo';
 
-let allToDos = JSON.parse(localStorage.getItem('allToDosArray'));
-
-allToDos ??= [];
-
 const form = () => {
   const form = document.createElement('form');
   const inputTitleNLabel = document.createElement('div');
@@ -107,8 +103,8 @@ const toDoCollection = () => {
   toDoListShow.setAttribute('id', 'toDoListShow');
   toDoList.appendChild(toDoListShow);
   const currentProject = localStorage.getItem('currentProject');
-  const arrayAux = currentProject == 'Default'
-    ? allToDos
+  const arrayAux = currentProject === 'Default'
+    ? JSON.parse(localStorage.getItem('Default'))
     : JSON.parse(localStorage.getItem(currentProject));
 
   for (let index = 0; index < arrayAux.length; index += 1) {
@@ -117,8 +113,9 @@ const toDoCollection = () => {
       arrayAux[index].description,
       arrayAux[index].date,
       arrayAux[index].priority,
+      arrayAux[index].id,
     );
-    if (card.title) {
+    if (card.id) {
       const renderCard = card.print();
       toDoListShow.appendChild(renderCard);
     }
@@ -127,4 +124,4 @@ const toDoCollection = () => {
   return toDoList;
 };
 
-export { toDoCollection, allToDos };
+export default toDoCollection;
