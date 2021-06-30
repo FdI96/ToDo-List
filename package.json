@@ -1,0 +1,25 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "Todo List App for Microverse",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FdI96/ToDo-List.git"
+  },
+  "author": "Federico Ignacio Lopez Cechini",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FdI96/ToDo-List/issues"
+  },
+  "homepage": "https://github.com/FdI96/ToDo-List#readme",
+  "devDependencies": {
+    "webpack": "^5.40.0",
+    "webpack-cli": "^4.7.2"
+  }
+}
